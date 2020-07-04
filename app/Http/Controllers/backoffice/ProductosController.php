@@ -11,10 +11,14 @@ use App\Estadoproducto;
 class ProductosController extends Controller
 {
     //Función para listar productos
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::all();
-        return view('backoffice.productos.index',compact('productos'));
+        $categorias = Categoria::all();
+        $estados = Estadoproducto::all();
+        $productos = Producto::nombre($request->nombre)
+                    ->categoria($request->categoria_id)
+                    ->estado($request->estado_id)->get();
+        return view('backoffice.productos.index',compact('productos','categorias','estados'));
     }
 
     //Formulario para crear un producto

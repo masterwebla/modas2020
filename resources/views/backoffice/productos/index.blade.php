@@ -24,6 +24,34 @@
 			<div class="card">
 				<div class="card-block">
 					<h4 class="card-title">Listado de productos</h4>
+					<?php 
+						$nombre = null; $categoria_id = null; $estado_id = null;
+						if($_GET){
+							if(isset($_GET['nombre']))
+								$nombre = $_GET['nombre'];
+							if(isset($_GET['categoria_id']))
+								$categoria_id = $_GET['categoria_id'];
+							if(isset($_GET['estado_id']))
+								$estado_id = $_GET['estado_id'];
+						}
+					?>
+					<form action="{{ route('productos.index') }}" class="form-inline">
+						<input type="text" name="nombre" placeholder="Buscar por nombre..." class="form-control" value="{{$nombre}}">
+						<select name="categoria_id" class="form-control">
+							<option value="">Seleccionar</option>
+							@foreach($categorias as $categoria)
+								<option @if($categoria_id==$categoria->id) selected @endif value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+							@endforeach
+						</select>
+						<select name="estado_id" class="form-control">
+							<option value="">Seleccionar</option>
+							@foreach($estados as $estado)
+								<option @if($estado_id==$estado->id) selected @endif value="{{$estado->id}}">{{$estado->nombre}}</option>
+							@endforeach
+						</select>
+						<button class="btn btn-primary"><i class="fa fa-search"></i></button>
+						<a class="btn btn-info" href="{{ route('productos.index') }}"><i class="fa fa-refresh"></i></a>
+					</form>
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
@@ -43,8 +71,8 @@
 									<td>${{number_format($producto->precio,0,",",".")}}</td>
 									<td>{{$producto->cantidad}}</td>
 									<td>{{$producto->descripcion}}</td>
-									<td>{{$producto->categoria_id}}</td>
-									<td>{{$producto->estado_id}}</td>
+									<td>{{$producto->categoria->nombre}}</td>
+									<td>{{$producto->estado->nombre}}</td>
 									<td>
 										
 										<form action="{{ route('productos.destroy',$producto->id) }}" method="POST">

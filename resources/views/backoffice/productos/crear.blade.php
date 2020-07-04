@@ -10,8 +10,7 @@
                 <li class="breadcrumb-item active">Productos</li>
             </ol>
         </div>
-        <div class="col-md-6 col-4 align-self-center">
-           
+        <div class="col-md-6 col-4 align-self-center">           
             <a href="{{ route('productos.index') }}" class="btn pull-right hidden-sm-down btn-success">Volver</a>
         </div>
     </div>
